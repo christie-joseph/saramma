@@ -79,6 +79,10 @@ const Proposal = () => {
         <h1>YAY! ❤️</h1>
         <img src={HAPPY_GIF} alt="Happy" className="gif-result" />
         <div className="heart-rain">🌸💖🥰</div>
+        <p className="meeting-text">Appo 12pm Sharp!!!!!!!</p>
+        <a href="https://www.google.com/maps/search/China+Town+London" target="_blank" rel="noopener noreferrer" className="location-link">
+          📍 China Town London
+        </a>
       </div>
     );
   }

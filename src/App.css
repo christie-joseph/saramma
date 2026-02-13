@@ -2,9 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap');
 
 :root {
-  --bg-color: #ffe6e6;
-  --envelope-color: #ff3366;
-  --flap-color: #e62e5c;
+  --bg-color: #f5f5dc;
+  /* Beige background */
+  --envelope-color: #eaddcf;
+  /* Beige envelope */
+  --flap-color: #d8c0ad;
+  /* Darker beige flap */
   --letter-color: #fff0f5;
   --text-color: #4a4a4a;
   --accent-color: #ff0044;
@@ -116,7 +119,7 @@ body {
   height: 0;
   border-left: 150px solid transparent;
   border-right: 150px solid transparent;
-  border-bottom: 100px solid #e62e5c;
+  border-bottom: 100px solid #d8c0ad;
   z-index: 4;
   border-radius: 0 0 10px 10px;
   pointer-events: none;
@@ -136,13 +139,13 @@ body {
 
 .envelope::before {
   left: 0;
-  border-left: 150px solid #ff4d79;
+  border-left: 150px solid #eaddcf;
   border-radius: 0 0 0 10px;
 }
 
 .envelope::after {
   right: 0;
-  border-right: 150px solid #ff4d79;
+  border-right: 150px solid #eaddcf;
   border-radius: 0 0 10px 0;
 }
 
@@ -368,4 +371,26 @@ body {
     transform: scale(1);
     opacity: 0.8;
   }
+}
+
+.meeting-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-top: 1rem;
+}
+
+.location-link {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  color: #007bff;
+  text-decoration: none;
+  margin-top: 0.5rem;
+  display: block;
+  transition: color 0.3s;
+}
+
+.location-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
 }
