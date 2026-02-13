@@ -1,0 +1,371 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap');
+
+:root {
+  --bg-color: #ffe6e6;
+  --envelope-color: #ff3366;
+  --flap-color: #e62e5c;
+  --letter-color: #fff0f5;
+  --text-color: #4a4a4a;
+  --accent-color: #ff0044;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Letter Component Styles */
+.envelope-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 1s ease;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+}
+
+.envelope-container {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s 1.5s;
+}
+
+.envelope-wrapper.open .envelope-container {
+  pointer-events: none;
+}
+
+.envelope-container:hover {
+  transform: scale(1.05);
+}
+
+.instruction-text {
+  margin-top: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  opacity: 0.8;
+  animation: pulseText 2s infinite;
+}
+
+.envelope-wrapper.open .instruction-text {
+  opacity: 0;
+}
+
+.envelope {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: var(--envelope-color);
+  border-radius: 10px;
+  margin: 0 auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 100px solid var(--flap-color);
+  transform-origin: top;
+  transition: transform 0.6s ease-in-out, z-index 0.6s ease-in-out;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+}
+
+.heart-seal {
+  position: absolute;
+  top: -65px;
+  left: -15px;
+  font-size: 2rem;
+  color: #e60023;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.open .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-bottom: 100px solid #e62e5c;
+  z-index: 4;
+  border-radius: 0 0 10px 10px;
+  pointer-events: none;
+}
+
+.envelope::before,
+.envelope::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-top: 100px solid transparent;
+  border-bottom: 100px solid transparent;
+  z-index: 3;
+}
+
+.envelope::before {
+  left: 0;
+  border-left: 150px solid #ff4d79;
+  border-radius: 0 0 0 10px;
+}
+
+.envelope::after {
+  right: 0;
+  border-right: 150px solid #ff4d79;
+  border-radius: 0 0 10px 0;
+}
+
+.letter {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  width: 270px;
+  height: 180px;
+  background-color: var(--letter-color);
+  border-radius: 5px;
+  z-index: 2;
+  transition: top 0.6s ease-in-out, transform 1s 1s ease-in-out, width 1s 1s ease-in-out, height 1s 1s ease-in-out, left 1s 1s ease-in-out, border-radius 1s 1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Zoom state: Expand to fill screen */
+.letter.full-screen {
+  /* Use fixed positioning to escape the envelope container */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Start centered */
+  width: 90vw;
+  height: 90vh;
+  z-index: 1000;
+  border-radius: 20px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  pointer-events: auto !important;
+  cursor: default;
+}
+
+.open .letter:not(.full-screen) {
+  /* Intermediate Step: Slide Up */
+  transform: translateY(-80px);
+  z-index: 6;
+}
+
+.letter-content {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease 0.5s;
+  pointer-events: auto;
+}
+
+.open-fade-in {
+  opacity: 1;
+}
+
+.back-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.3s;
+  z-index: 1001;
+  pointer-events: auto;
+}
+
+.back-btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Proposal Styles */
+.proposal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.typing-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--accent-color);
+  margin: 0;
+  min-height: 4rem;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 2rem;
+  opacity: 0;
+  transition: opacity 1s ease;
+  flex-wrap: wrap;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.buttons-container.fade-in {
+  opacity: 1;
+}
+
+.btn {
+  padding: 15px 40px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  position: relative;
+  pointer-events: auto;
+}
+
+.yes-btn {
+  background-color: #4CAF50;
+  color: white;
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.yes-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.1);
+}
+
+.no-btn {
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+}
+
+.gif-result {
+  max-width: 100%;
+  max-height: 50vh;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.celebration,
+.sad-state {
+  text-align: center;
+  animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.celebration h1,
+.sad-state h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  color: var(--accent-color);
+}
+
+.heart-rain {
+  font-size: 2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  80% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseText {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
